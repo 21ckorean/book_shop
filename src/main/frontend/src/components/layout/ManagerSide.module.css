@@ -1,0 +1,58 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.container > div{
+  padding: 10px 10px;
+}
+
+.a{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.a > div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 10px;
+}
+
+.b{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.b > div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 10px;
+}
+
+.c{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.c > div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 10px;
+}
+
+h3{
+  display: flex;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+a:hover{
+  color: lightblue;
+}
