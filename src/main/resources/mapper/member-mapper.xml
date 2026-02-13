@@ -35,6 +35,23 @@
 		)
 	</insert>
 
+	<!--중복 이메일 체크를 위한 쿼리-->
+	<select id="isUsableEmail" resultType="String">
+		SELECT MEM_EMAIL
+		FROM SHOP_MEMBER
+		WHERE MEM_EMAIL = #{memEmail}
+	</select>
+
+	<!-- 로그인 실행을 위해 입력한값과 데이터베이스에 저장된 값이 같은지 확인을 위한 쿼리 -->
+	<select id="Login" resultMap="member">
+		SELECT MEM_EMAIL
+			, MEM_NAME
+			, MEM_ROLE
+		FROM SHOP_MEMBER
+		WHERE MEM_EMAIL = #{memEmail}
+		AND MEM_PW = #{memPw}
+	</select>
+
 
 
 

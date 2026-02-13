@@ -5,6 +5,7 @@ const Button = ({
   title='버튼', 
   variant='purple', 
   size='small',
+  disabled=false,
   ...props
 }) => {
   return (
@@ -12,8 +13,12 @@ const Button = ({
       type='button'
       // className= '' or {} {``빽틱쓰면 변수와문자열사용}
       className={
-        `${styles.button} ${styles[variant]} ${styles[size]}`
+        `${styles.button} 
+         ${styles[variant]} 
+         ${styles[size]} 
+         ${disabled ? styles.disabled : ''}` 
       }
+      disabled={disabled}
       {...props}
     >{title}</button>
   )

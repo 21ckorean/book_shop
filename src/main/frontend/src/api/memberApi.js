@@ -15,3 +15,35 @@ export const insertMember = async (joinData) => {
     console.log('회원가입 axios 에러', e)
   }
 }
+
+/**
+ * 입력한 이메일이 중복인지 확인하는 api
+ * @param {string} memEmail 입력한 이메일
+ * @returns 
+ */
+export const checkId = async (memEmail) => {
+  try{
+    const response = await axios.get(`http://localhost:8080/members/checkId/${memEmail}`)
+    return response;
+  }catch(e){
+    console.log('이메일 중복 확인 axios 에러', e);
+  }
+}
+
+/**
+ * 로그인 쿼리 실행 axios 함수
+ * @returns 
+ */
+export const login = async (loginData) => {
+  try{
+    const response = await axios.get('http://localhost:8080/members/login', {params : loginData});
+    console.log(response)
+    return response;
+  }catch(e){
+    console.log('로그인 axios 에러', e)
+  }
+}
+
+/**
+ * 로그아웃 쿼리 실행 axios 함수
+ */

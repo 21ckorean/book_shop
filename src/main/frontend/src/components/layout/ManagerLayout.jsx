@@ -9,10 +9,10 @@ import { Outlet } from 'react-router-dom'
 ////////////////////////////////////////////////////////////////////
 
 
-const ManagerLayout = () => {
+const ManagerLayout = ({setLoginInfo}) => {
   return (
     <div className={styles.container}>
-      <ManagerHeader />
+      <ManagerHeader setLoginInfo={setLoginInfo}/>
       <div className={styles.main}>
         <div className={styles.side}>
           <ManagerSide/>

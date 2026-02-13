@@ -1,0 +1,8 @@
+.container{
+  display: grid;
+  /* border: 1px solid black; */
+  grid-template-columns: repeat(5, 1fr) ;
+  gap: 20px;
+  margin: 10px auto;
+}
+

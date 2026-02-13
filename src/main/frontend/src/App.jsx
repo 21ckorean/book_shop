@@ -5,12 +5,23 @@ import Join from './pages/member/Join'
 import './reset.css'
 import BookList from './pages/book/BookList'
 import Login from './pages/member/Login'
+import BookForm from './pages/book/BookForm'
+import WebStorage from './study/WebStorage'
+import { useState } from 'react'
+import Test1 from './study/Test1'
 
 function App() {
+
+  console.log('App 다시읽음')
+
+  //로그인 정보를 저장하는 변수
+  const [loginInfo, setLoginInfo] = useState({});
   
 
   return (
     <>
+      <Test1/>
+
       <Routes>
         {/* localhost:5173 */}
         {/* Route 안에있는 Route path에는 /가 들어가있다. */}
@@ -22,8 +33,11 @@ function App() {
 
 
         {/* 일반회원이 접근하는 페이지들 */}
-        <Route path='/' element={ <BasicLayout />}> 
+        <Route path='/' element={ <BasicLayout setLoginInfo={setLoginInfo}/>}> 
           
+          {/* 웹스토리지 학습용 컴포넌트 */}
+          <Route path='storage' element={ <WebStorage />}/>
+
           {/* 도서 목록 페이지, URL : localhost:5173 */}
           <Route path='' element={ < BookList/> }/>
 
@@ -31,13 +45,17 @@ function App() {
           <Route path='join' element={ <Join />}/>
 
           {/* 로그인페이지, URL : localhost:5173/login */}
-          <Route path='login' element={ <Login />}/>
+          <Route path='login' element={ <Login setLoginInfo={setLoginInfo}/>}/>
 
         </Route>
+        
 
         {/* 매니저 권한의 회원이 접근하는 페이지들 */}
-        <Route path='/manage' element= { <ManagerLayout />}>
-          <Route path='join' element={ <Join/> }/>
+        <Route path='/manage' element= { <ManagerLayout 
+        setLoginInfo={setLoginInfo}/>}>
+          {/* 상품 등록 페이지, URL : localhost:5173/manage/book-form */}
+          <Route path='book-form' element={ <BookForm /> }/>
+        
         </Route>
 
         
