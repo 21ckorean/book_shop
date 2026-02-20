@@ -13,4 +13,8 @@ public interface BookMapper {
 
   //도서 목록 쿼리 실행 메서드
   List<BookDTO> selectBookList();
+
+  //다음에 저장될 도서번호를 조회하는 쿼리
+  int getNextBookNum();
+
 }
