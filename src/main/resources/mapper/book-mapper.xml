@@ -5,14 +5,21 @@
 <!-- namespace에는 xml파일과 연결할 Mapper interface 파일명을 패키지를 포함하여 적어주세요 -->
 <mapper namespace="com.green.book_shop.book.mapper.BookMapper">
 	<resultMap id="book" type="com.green.book_shop.book.dto.BookDTO">
-        <id column="BOOK_NUM" property="bookNum" />
-        <result column="BOOK_TITLE" property="bookTitle" />
-        <result column="AUTHOR" property="author" />
-        <result column="BOOK_PRICE" property="bookPrice" />
-        <result column="BOOK_STOCK" property="bookStock" />
-        <result column="BOOK_INTRO" property="bookIntro" />
-        <result column="PUBLISH_DATE" property="publishDate" />
-        <result column="CATE_NUM" property="cateNum" />
+        <id     column="BOOK_NUM"       property="bookNum" />
+        <result column="BOOK_TITLE"     property="bookTitle" />
+        <result column="AUTHOR"         property="author" />
+        <result column="BOOK_PRICE"     property="bookPrice" />
+        <result column="BOOK_STOCK"     property="bookStock" />
+        <result column="BOOK_INTRO"     property="bookIntro" />
+        <result column="PUBLISH_DATE"   property="publishDate" />
+        <result column="CATE_NUM"       property="cateNum" />
+        <!--<association property=""></association> 1 : 1 관계 설정-->
+        <!--<collection property=""></collection> 1: N 관계 설정-->
+        <!--resultMap이 다른파일에 있다면 현재파일에서 바로 사용불가.-->
+        <!--실제 resultMap이 존재하는 곳의 namespace.id를 쳐야 사용가능-->
+        <collection property="bookImgList"
+                    resultMap="com.green.book_shop.book.mapper.BookImgMapper.bookImg">
+        </collection>
     </resultMap>
 
     <insert id="insertBook">
@@ -35,11 +42,15 @@
         )
     </insert>
 
+    <!--도서 목록 조회-->
     <select id="selectBookList" resultMap="book">
-        SELECT BOOK_NUM
+        SELECT B.BOOK_NUM
             , BOOK_TITLE
             , BOOK_PRICE
-        FROM SHOP_BOOK
+            , UPLOAD_FILE_NAME
+        FROM SHOP_BOOK B, BOOK_IMG I
+        WHERE B.BOOK_NUM = I.BOOK_NUM
+        AND IS_MAIN = 'Y'
         ORDER BY BOOK_NUM DESC
     </select>
 
@@ -48,6 +59,20 @@
         FROM SHOP_BOOK
     </select>
 
+    <!--도서 상세정보 조회-->
+    <select id="selectBookDetail" resultMap="book">
+        SELECT B.BOOK_NUM
+            , BOOK_TITLE
+            , AUTHOR
+            , BOOK_PRICE
+            , BOOK_INTRO
+            , UPLOAD_FILE_NAME
+            , IS_MAIN
+        FROM SHOP_BOOK B, BOOK_IMG I
+        WHERE B.BOOK_NUM = I.BOOK_NUM
+        AND B.BOOK_NUM = #{bookNum}
+        ORDER BY BOOK_NUM DESC
+    </select>
 
 </mapper>
 

@@ -42,5 +42,9 @@ public class BookService {
     return bookMapper.getNextBookNum();
   }
 
-
+  //도서 상세 조회 기능 메서드
+  public BookDTO getDetail(int bookNum){
+    System.out.println("도서상세조회");
+    return bookMapper.selectBookDetail(bookNum);
+  }
 }

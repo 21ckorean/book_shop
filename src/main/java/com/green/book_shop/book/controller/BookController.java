@@ -80,4 +80,17 @@ public class BookController {
     }
   }
 
+  //도서 상세 조회 api
+  //(GET) localhost:8080/books/detail/1
+  @GetMapping("/detail/{bookNum}")
+  public ResponseEntity<?> getBook(@PathVariable int bookNum){
+    try{
+      BookDTO book = bookService.getDetail(bookNum);
+      return ResponseEntity.status(HttpStatus.CREATED).body(book);
+    }catch(Exception e){
+      log.error("도서 상세 조회 중 에러", e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+
 }

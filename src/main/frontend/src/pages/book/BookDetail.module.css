@@ -1,0 +1,80 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  border: 1px solid black;
+  align-items: center;
+  padding: 30px 30px;
+  gap: 10px;
+}
+
+.a{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.a > div:last-child{
+  text-align: center;
+}
+
+.b{
+  display: flex;
+  width: 700px;
+  gap: 30px;
+  padding: 30px 50px;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: 1px solid black;
+}
+
+
+
+.mainImg{
+  width: 200px;
+  height: auto;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px 0px;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+.info > p:nth-child(1){
+  font-size: 1.5rem;
+}
+.info > p:nth-child(2){
+  font-size: 1.2rem;
+}
+
+
+.button{
+  display: flex;
+  gap: 10px;
+}
+
+button{
+  width: 130px;
+  padding: 5px 15px;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+button:nth-child(1){
+  background-color: rgb(7, 192, 7);
+}
+button:nth-child(2){
+  background-color: rgb(57, 57, 238);
+}

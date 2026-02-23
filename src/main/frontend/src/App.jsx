@@ -9,6 +9,7 @@ import BookForm from './pages/book/BookForm'
 import WebStorage from './study/WebStorage'
 import { useState } from 'react'
 import Test1 from './study/Test1'
+import BookDetail from './pages/book/BookDetail'
 
 function App() {
 
@@ -47,6 +48,8 @@ function App() {
           {/* 로그인페이지, URL : localhost:5173/login */}
           <Route path='login' element={ <Login setLoginInfo={setLoginInfo}/>}/>
 
+          {/* 도서 상세 페이지, URL : localhost:5173/detail/3 */}
+          <Route path='detail/:bookNum' element={ <BookDetail />}/>
         </Route>
         
 
