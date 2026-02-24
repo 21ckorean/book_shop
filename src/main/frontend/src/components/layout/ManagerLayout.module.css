@@ -1,6 +1,6 @@
 .container{
   width: 1200px;
-  border: 1px solid black;
+
   margin: 0 auto;
 }
 
@@ -15,5 +15,5 @@
 
 .content{
   width: 83%;
-  border: 1px solid black;
+ 
 }

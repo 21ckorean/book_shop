@@ -10,6 +10,8 @@ import WebStorage from './study/WebStorage'
 import { useState } from 'react'
 import Test1 from './study/Test1'
 import BookDetail from './pages/book/BookDetail'
+import CartList from './pages/cart/CartList'
+import UserLayout from './components/layout/UserLayout'
 
 function App() {
 
@@ -42,16 +44,24 @@ function App() {
           {/* 도서 목록 페이지, URL : localhost:5173 */}
           <Route path='' element={ < BookList/> }/>
 
+          {/* 도서 상세 페이지, URL : localhost:5173/detail/3 */}
+          <Route path='detail/:bookNum' element={ <BookDetail />}/>
+
           {/* 회원가입페이지, URL : localhost:5173/join */}
           <Route path='join' element={ <Join />}/>
 
           {/* 로그인페이지, URL : localhost:5173/login */}
           <Route path='login' element={ <Login setLoginInfo={setLoginInfo}/>}/>
-
-          {/* 도서 상세 페이지, URL : localhost:5173/detail/3 */}
-          <Route path='detail/:bookNum' element={ <BookDetail />}/>
+          
         </Route>
         
+        {/* 로그인한 유저가 접근할 수 있는 페이지들 */}
+        <Route path='/my' element={ <UserLayout setLoginInfo={setLoginInfo}/>}>
+          {/* 장바구니 페이지, URL - localhost:8080/my/cart-list */}
+          <Route path='cart-list' element={ <CartList />} />
+
+        </Route>
+
 
         {/* 매니저 권한의 회원이 접근하는 페이지들 */}
         <Route path='/manage' element= { <ManagerLayout 
