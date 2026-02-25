@@ -85,7 +85,7 @@ SELECT * FROM SHOP_CART;
 # BOOK_NUM에 ON DELETE CASCADE를 넣으면 장바구니에서 삭제함.
 
 
-
+DELETE  FROM SHOP_CART ;
 
 
 

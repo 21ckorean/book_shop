@@ -5,11 +5,11 @@
 <!-- namespace에는 xml파일과 연결할 Mapper interface 파일명을 패키지를 포함하여 적어주세요 -->
 <mapper namespace="com.green.book_shop.cart.mapper.CartMapper">
 	<resultMap id="cart" type="com.green.book_shop.cart.dto.CartDTO">
-        <id     column="CART_NUM" property="cartNum" />
-        <result column="BOOK_NUM" property="bookNum" />
-        <result column="CART_CNT" property="cartCnt" />
-        <result column="MEM_EMAIL" property="memEmail" />
-        <result column="CART_DATE" property="cartDate" />
+        <id     column="CART_NUM"   property="cartNum" />
+        <result column="BOOK_NUM"   property="bookNum" />
+        <result column="CART_CNT"   property="cartCnt" />
+        <result column="MEM_EMAIL"  property="memEmail" />
+        <result column="CART_DATE"  property="cartDate" />
 
         <association property="book"
                      resultMap="com.green.book_shop.book.mapper.BookMapper.book">
@@ -18,13 +18,13 @@
 
     <insert id="insertCart">
         INSERT INTO SHOP_CART (
-            BOOK_NUM
-            , CART_CNT
-            , MEM_EMAIL
+        BOOK_NUM
+        , CART_CNT
+        , MEM_EMAIL
         ) VALUES (
-            #{bookNum}
-            , #{cartCnt}
-            , #{memEmail}
+        #{bookNum}
+        , #{cartCnt}
+        , #{memEmail}
         )
     </insert>
 
@@ -44,6 +44,31 @@
         AND MEM_EMAIL = #{memEmail}
         ORDER BY CART_DATE DESC;
     </select>
+
+
+
+    <!--현재 장바구니에서 상품이 있는지 확인하는 쿼리-->
+    <select id="isDuplicateBook" resultType="String">
+        SELECT MEM_EMAIL
+        FROM SHOP_CART
+        WHERE MEM_EMAIL = #{memEmail}
+        AND BOOK_NUM = #{bookNum}
+    </select>
+
+    <!-- 업데이트하는 쿼리-->
+    <update id="updateCartBook">
+        UPDATE SHOP_CART
+        SET
+            CART_CNT = CART_CNT + #{cartCnt}
+            , CART_DATE = SYSDATE()
+        WHERE BOOK_NUM = #{bookNum}
+        AND MEM_EMAIL = #{memEmail}
+    </update>
+
+    <delete id="deleteCart">
+        DELETE FROM SHOP_CART
+        WHERE CART_NUM = #{cartNum}
+    </delete>
 </mapper>
 
 

@@ -22,3 +22,13 @@ export const getCartList = async (memEmail) => {
     console.log('장바구니 목록 조회 axios 오류', e)
   }
 }
+
+//장바구니 삭제 api
+export const delCart = async(cartNum) => {
+  try{
+    const response = await axios.delete(`http://localhost:8080/carts/${cartNum}`);
+    return response;
+  }catch(e){
+    console.log('장바구니 삭제 axios 오류', e)
+  }
+}

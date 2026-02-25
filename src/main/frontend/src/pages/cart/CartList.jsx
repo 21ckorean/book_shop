@@ -2,101 +2,191 @@ import React, { useEffect, useState } from 'react'
 import styles from './CartList.module.css'
 import Button from '../../components/common/Button'
 import Input from '../../components/common/Input'
-import { getCartList } from '../../api/cartApi'
+import { delCart, getCartList } from '../../api/cartApi'
+import ListTable from '../../components/common/ListTable'
+import dayjs from 'dayjs'
 const CartList = () => {
 
 
   //조회한 장바구니 목록 정보를 저장할 state변수
   const [cartList, setCartList] = useState([]);
 
+  //총 구매 가격 state 변수
+  const [totalPrice, setTotalPrice] = useState(0);
+
+
 
   //마운트시 장바구니 목록 조회
   useEffect(() => {
-    selectCartList();
+    getList();
   }, []);
 
 
-  //장바구니 목록 조회 함수
-  const selectCartList = async () => {
-    const loginInfo = sessionStorage.getItem('loginInfo');
-    const loginInfo_obj = JSON.parse(loginInfo);
+  //장바구니 목록데이터 조회 함수
+  const getList = async () => {
+    //로그인한 회원의 아이디
+    const memEmail = JSON.parse(sessionStorage.getItem('loginInfo')).memEmail;
 
-    const response = await getCartList(loginInfo_obj.memEmail);
-      setCartList(response.data);
-      console.log(response.data)
+    const response = await getCartList(memEmail);
+    console.log(response.data);
+    setCartList(response.data);
+
+    //총 구매 가격 세팅
+    let sum = 0;
+    for(const e of response.data){
+      e.cartCnt * e.book.bookPrice
+      sum = sum + e.cartCnt * e.book.bookPrice
+    }
+    setTotalPrice(sum);
+
+
+
+    // const loginInfo = sessionStorage.getItem('loginInfo');
+    // const loginInfo_obj = JSON.parse(loginInfo);
+
+    // const response = await getCartList(loginInfo_obj.memEmail);
+    //   setCartList(response.data);
+    //   console.log(response.data)
     }
 
-  
+  //삭제 버튼 클릭 시 실행 함수
+  const deleteCart = async (cartNum) => {
+    if(confirm('정말 삭제할까요?')){
+      const response = await delCart(cartNum);
+      alert('삭제 했습니다.');
+
+      //장바구니 목록 조회
+      getList();
+    }
+
+  }
+
 
   return (
-    <div className={styles.container}>     
-        <table className={styles.table}>
+    <div>
+      <div>
+        <ListTable>
+          <colgroup>
+            <col width='3%'/>
+            <col width='3%'/>
+            <col width='*'/>
+            <col width='10%'/>
+            <col width='10%'/>
+            <col width='10%'/>
+            <col width='15%'/>
+            <col width='10%'/>
+          </colgroup>
           <thead>
             <tr>
-              <td>NO</td>
+              <td>No</td>
               <td>
-                <Input 
-                  type='checkbox'
+                <input 
+                  type="checkbox" 
+                  checked={true}
                 />
               </td>
               <td>도서정보</td>
               <td>가격</td>
               <td>수량</td>
               <td>구매가격</td>
-              <td>장바구니 등록 일자</td>
-              <td>삭제</td>
+              <td>등록일자</td>
+              <td>삭 제</td>
             </tr>
           </thead>
-          <tbody>          
+          <tbody>
             {
+              cartList.length === 0 
+              ?
+              <tr>
+                <td colSpan={8}>장바구니에 등록된 도서가 없습니다.</td>
+              </tr>
+              :
               cartList.map((cart, i) => {
-                return (
+                return(
                   <tr key={i}>
-                  <td>{cart.cartNum}</td>
-                  <td>
-                    <Input 
-                      type='checkbox'
-                    />
-                  </td>
-                  <td>
+                    <td>{cartList.length - i}</td>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        checked={true}
+                      />
+                    </td>
+                    <td> 
+                      <div className={styles.flex_div}>
+                        <img 
+                          style={{width : '60px'}}
+                          src={`http://localhost:8080/upload/${cart.book.bookImgList[0].uploadFileName}`} />
+                        <p>{cart.book.bookTitle}</p>
+                      </div>
+                    </td>
+                    <td>{cart.book.bookPrice.toLocaleString()}원</td>
+                    <td className={styles.cnt_td}>
+                      <Input 
+                        value={cart.cartCnt}
+                      />
+                    </td>
+                    <td>{(cart.book.bookPrice * cart.cartCnt).toLocaleString()}원</td>
+                    <td>
+                      {dayjs(cart.cartDate).format('YYYY-MM-DD HH:mm')}
+                    </td>
+                    <td>
+                      <Button 
+                        title='삭제' 
+                        variant='gray'
+                        onClick={e => { deleteCart(cart.cartNum)
 
-                    <img style={{width : '60px'}}
-                    src={`http://localhost:8080/upload/${cart.book.bookImgList[0].uploadFileName}`}/>
-
-                    {cart.book.bookTitle}</td>
-                  <td>{cart.book.bookPrice}</td>
-                  <td>
-                    <Input 
-                      type='text'
-                    />
-                  </td>
-                  <td>60000원</td>
-                  <td>{cart.cartDate}</td>
-                  <td>
-                    <Button 
-                      title='삭제'
-                    />
-                  </td>
-               </tr>  
+                        }}
+                      />
+                    </td>
+                  </tr>
                 )
               })
-            } 
+            }
           </tbody>
-        </table>
-        <div className={styles.bottom}>
-          <div>
-            <p>총 구매 가격 : </p>
-          </div>
-          <div>
-            <Button 
-              title='선택 삭제'
-            />
-            <Button 
-              title='선택 구매'
-            />
-          </div>
-        </div>    
+        </ListTable>
+
+
+      </div>
+      <div>
+        <div>
+          <p>총 구매 가격 :
+            {totalPrice.toLocaleString()}
+            원
+          </p>
+        </div>
+        <div>
+          <Button 
+            title='선택 삭제'
+            variant='green'
+          />
+          <Button 
+            title='선택 구매'
+          />
+        </div>
+      </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
   )
 }
 

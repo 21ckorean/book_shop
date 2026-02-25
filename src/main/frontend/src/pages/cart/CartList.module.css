@@ -1,34 +1,10 @@
-.container{
+.flex_div{
   display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  height: 500px;
-  padding: 30px;
-  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
-.table{
-  text-align: center;
-  justify-content: center;
-  ;
-}
-
-.table td{
-  border: 1px solid black;
-  vertical-align: middle;
-}
-
-
-
-
-
-.bottom{
-  display: flex;
-  flex-direction: column;
+.cnt_td > input{
   width: 100%;
-  align-items: end;
-  border: 1px solid black;
+  text-align: center;
 }
-
-
-

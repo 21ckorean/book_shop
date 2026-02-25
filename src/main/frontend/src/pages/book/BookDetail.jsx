@@ -81,6 +81,13 @@ const BookDetail = () => {
       cartCnt : cntAndPrice.cnt,
       memEmail : loginInfo_obj.memEmail
     };
+    // if(bookNum이 존재하는거면){
+    // update 쿼리실행 axios함수 호출
+    // }
+    // else{
+    // const response = await regCart(data);  
+    //  }
+
 
     const response = await regCart(data);
 

@@ -35,15 +35,27 @@ public class CartController {
   //장바구니 목록 조회 api
   //(GET) localhost:8080/carts/memEmail
   @GetMapping("/{memEmail}")
-  public ResponseEntity<?> getCartList(@PathVariable String memEmail){
+  public ResponseEntity<?> getCartList(@PathVariable("memEmail") String memEmail){
     try{
       log.info("장바구니 목록을 조회합니다");
       List<CartDTO> list = cartService.selectCartList(memEmail);
-      return ResponseEntity.status(HttpStatus.CREATED).body(list);
+      return ResponseEntity.status(HttpStatus.OK).body(list);
     }catch(Exception e){
-      log.error("장바구니 목록 조회 에러");
+      log.error("장바구니 목록 조회 api 에러", e);
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 
+  //장바구니 상품 삭제 api
+  //(DELETE) localhost:8080/carts/1
+  @DeleteMapping("/{cartNum}")
+  public ResponseEntity<?> deleteCart(@PathVariable("cartNum") int cartNum){
+    try{
+      cartService.deleteCart(cartNum);
+      return ResponseEntity.status(HttpStatus.OK).build();
+    }catch(Exception e){
+      log.error("장바구니 상품 삭제 api 오류", e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 }

@@ -61,20 +61,4 @@
   gap: 10px;
 }
 
-button{
-  width: 130px;
-  padding: 5px 15px;
-  color: white;
-  border-radius: 3px;
-  border: none;
-  cursor: pointer;
-}
 
-
-
-button:nth-child(1){
-  background-color: rgb(7, 192, 7);
-}
-button:nth-child(2){
-  background-color: rgb(57, 57, 238);
-}
