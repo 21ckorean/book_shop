@@ -14,6 +14,12 @@ const CartList = () => {
   //총 구매 가격 state 변수
   const [totalPrice, setTotalPrice] = useState(0);
 
+  //체크한 체크박스의 value를 저장할 state 변수
+  //(해당 변수에는 cartNum이 저장됨)
+  const [cartNumList, setCartNumList] = useState([]);
+
+  //제목줄의 체크박스 체크여부를 저장할 state 변수
+  const [isChecked, setIsChecked] = useState(true);
 
 
   //마운트시 장바구니 목록 조회
@@ -39,6 +45,12 @@ const CartList = () => {
     }
     setTotalPrice(sum);
 
+    //조회한 cartNum 데이터들을 cartNumList 변수에 저장
+    const cartNumArr = []
+    for(const e of response.data){
+      cartNumArr.push(e.cartNum);
+    }
+    setCartNumList(cartNumArr);
 
 
     // const loginInfo = sessionStorage.getItem('loginInfo');
@@ -47,7 +59,7 @@ const CartList = () => {
     // const response = await getCartList(loginInfo_obj.memEmail);
     //   setCartList(response.data);
     //   console.log(response.data)
-    }
+  }
 
   //삭제 버튼 클릭 시 실행 함수
   const deleteCart = async (cartNum) => {
@@ -61,6 +73,32 @@ const CartList = () => {
 
   }
 
+  //체크박스 컨트롤 함수
+  const handleCartNumList = (e) => {
+    //체크가 됐을때
+    if(e.target.checked){
+      setCartNumList([...cartNumList, Number(e.target.value)])
+    }
+    //체크해제 됐을때
+    else{
+      setCartNumList(cartNumList.filter(each => each !== Number(e.target.value)))
+    }
+
+  }
+
+  //cartNumList state변수가 변경되면 실행할 useEffect
+  //체크박스가 변경되면 총 가격을 변경
+  //의존성배열에 있는게 변경되면 실행
+  useEffect(() => {
+    //총 가격 계산
+    let sum = 0;
+    for(const e of cartList){
+      if(cartNumList.includes(e.cartNum)){
+        sum = sum + e.cartCnt * e.book.bookPrice;
+      }
+    }
+    setTotalPrice(sum);
+  }, [cartNumList])
 
   return (
     <div>
@@ -82,7 +120,19 @@ const CartList = () => {
               <td>
                 <input 
                   type="checkbox" 
-                  checked={true}
+                  checked={isChecked}
+                  onChange={(e) => {
+                    //제목줄의 상태 변경
+                    setIsChecked(e.target.checked);
+
+                    //체크여부에 따라 내용줄의 checkbox 체크여부도 변경
+                    if(e.target.checked){
+                      setCartNumList(cartList.map(each => each.cartNum));
+                    }
+                    else{
+                      setCartNumList([])
+                    }
+                  }}
                 />
               </td>
               <td>도서정보</td>
@@ -108,8 +158,9 @@ const CartList = () => {
                     <td>
                       <input 
                         type="checkbox" 
-                        checked={true}
+                        checked={cartNumList.includes(cart.cartNum)}
                         value={cart.cartNum}
+                        onChange={e => handleCartNumList(e)}
                       />
                     </td>
                     <td> 
