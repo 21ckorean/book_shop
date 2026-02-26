@@ -109,6 +109,7 @@ const CartList = () => {
                       <input 
                         type="checkbox" 
                         checked={true}
+                        value={cart.cartNum}
                       />
                     </td>
                     <td> 
@@ -154,7 +155,7 @@ const CartList = () => {
             원
           </p>
         </div>
-        <div>
+        <div className={styles.button_div}>
           <Button 
             title='선택 삭제'
             variant='green'

@@ -8,3 +8,13 @@
   width: 100%;
   text-align: center;
 }
+
+.button_div{
+  display: flex;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.button_div > button{
+  width: 100px;
+}
