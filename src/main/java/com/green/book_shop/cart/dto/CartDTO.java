@@ -19,5 +19,4 @@ public class CartDTO {
   private String memEmail;
   private LocalDateTime cartDate;
   private BookDTO book;
-
 }

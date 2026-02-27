@@ -22,4 +22,11 @@ public interface CartMapper {
 
   //장바구니 삭제쿼리
   void deleteCart(int cartNum);
+
+  //장바구니 수량 변경 쿼리
+  void updateCartCnt(CartDTO cartDTO);
+
+  //장바구니 선택 삭제 쿼리
+  void deleteCarts(List<Integer> cartNumList);
+
 }
