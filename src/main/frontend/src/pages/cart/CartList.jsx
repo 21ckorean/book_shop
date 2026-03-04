@@ -5,6 +5,7 @@ import Input from '../../components/common/Input'
 import { delCart, delCarts, getCartList, updateCnt } from '../../api/cartApi'
 import ListTable from '../../components/common/ListTable'
 import dayjs from 'dayjs'
+import { insertBuy } from '../../api/buyApi'
 const CartList = () => {
 
 
@@ -125,6 +126,62 @@ const CartList = () => {
     getList();
   }
 
+  //선택 도서 구매
+  const regBuys = async () => {
+    //로그인 여부 확인
+    const loginInfo = sessionStorage.getItem('loginInfo');
+    const loginInfo_obj = JSON.parse(loginInfo);
+
+    if(loginInfo == null){
+      alert('로그인 필수!!!');
+      return ;
+    }
+    //구매 도서 선택 여부 확인
+    if(cartNumList.length === 0){
+      alert('구매할 도서를 선택하세요');
+      return;
+    }
+
+    //아래 data 변수의 detailList 키에 들어갈 데이터 생성
+    const detailList = [];
+
+    //체크한 도서수만큼 반복
+    for(let i = 0; i < cartNumList.length; i++){
+      const detailData = {
+        bookNum : cartList.filter(e => e.cartNum === cartNumList[i]).map(e => e.bookNum)[0],
+        buyCnt : cartList.filter(e => e.cartNum === cartNumList[i]).map(e => e.cartCnt)[0]
+      };
+
+      detailList.push(detailData);
+    }
+
+    //자바로 가져갈 데이터
+    const data = {
+      buyPrice : totalPrice,
+      memEmail : loginInfo_obj.memEmail,
+      detailList : detailList
+    }
+
+    console.log('자바로 가져갈 데이터 : ', data);
+
+    //SHOP_BUY, BUY_DETAIL 테이블에 데이터 INSERT
+    await insertBuy(data);
+
+    //장바구니에서 구매한 도서는 삭제
+   
+
+    //정말 구매할지 물어봄
+    const result = confirm('장바구니에서 선택한 도서를 구매할까요?');
+    if(!result) return ;
+
+    alert(`선택하신 ${cartList.length}개의 상품을 구매했습니다.`);
+    await delCarts(cartNumList);
+
+    //화면 리렌더링을 위해 장바구니 목록 조회
+    await getList();
+
+    
+  };
 
   return (
     <div>
@@ -238,11 +295,15 @@ const CartList = () => {
         <div className={styles.button_div}>
           <Button 
             title='선택 삭제'
-            variant='green'
+            size='medium'
             onClick={e => removeCarts()}
           />
           <Button 
             title='선택 구매'
+            size='medium'
+            onClick={e => {
+              regBuys();
+            }}
           />
         </div>
       </div>

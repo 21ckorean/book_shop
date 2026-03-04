@@ -34,7 +34,7 @@ const Header = ({setLoginInfo}) => {
             <>
               <li>{loginInfo_obj.memEmail}님 반갑습니다</li>
               <li>
-                <Link to='/cart-list'>마이페이지</Link>
+                <Link to='/my/cart-list'>마이페이지</Link>
               </li>
               <li 
                 style={{cursor : 'pointer'}}

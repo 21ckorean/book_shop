@@ -66,7 +66,7 @@ public class BookController {
     }
   }
 
-  //도서 조회 api
+  //도서 목록 조회 api
   //(GET) localhost:8080/books
   //컨트롤러의 매개변수는 쿼리에서 받아오는 매개변수가 있을때 작성
   @GetMapping("")

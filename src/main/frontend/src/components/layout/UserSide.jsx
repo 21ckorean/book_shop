@@ -2,24 +2,57 @@ import React from 'react'
 import styles from './ManagerSide.module.css'
 import { IoAdd } from "react-icons/io5";
 import { IoGift } from "react-icons/io5";
+import { Link, NavLink } from 'react-router-dom';
+
+//<NavLink to='이동할 url' className={(param) => {}}</NavLink>
+//NavLink 컴포넌트의 className props에는 화살표 함수가 들어온다.
+//이 화살표 함수의 매개변수를 출력하면 다음과 같은 데이터를 얻을 수 있다.
+//{isActive: true, isPending: false, isTransitioning: false}
+//isActive key의 value는 해당 메뉴가 선택됐을때는 true, 그렇지 않으면 false값을 가진다.
+
+
 
 const UserSide = () => {
   return (
     <div className={styles.container}>
-          <div className={styles.a}>
-            <div>
-              <div>
-                <a href=""><IoGift />장바구니</a>
-              </div>
-              <div>
-                <a href=""><IoGift />구매내역</a>
-              </div>
-              <div>
-                <a href=""><IoGift />내정보수정</a>
-              </div>
-            </div>
+      <div className={styles.a}>
+        <div>
+          <div>
+            <p>
+              <IoGift />
+              <NavLink 
+                to={'/my/cart-list'}
+                className={param =>  param.isActive ? styles.active : ''}
+              >
+                장바구니
+              </NavLink>
+            </p>
+          </div>
+          <div>      
+            <p>
+              <IoGift />
+              <NavLink 
+                to={'/my/buy-list'}
+                className={param => param.isActive ? styles.active : ''}
+                >
+                구매내역
+              </NavLink> 
+            </p>
+          </div>
+          <div>
+            <p>
+              <IoGift />
+              <NavLink 
+                to={'/my/my-page'}
+                className={param =>  param.isActive ? styles.active : ''}
+              >
+                내정보수정
+              </NavLink> 
+            </p>
           </div>
         </div>
+      </div>
+    </div>
   )
 }
 

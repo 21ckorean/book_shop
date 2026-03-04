@@ -45,7 +45,7 @@ export const updateCnt = async (cartNum, cartCnt) => {
 
 }
 
-//
+//장바구니 선택 삭제 api
 export const delCarts = async (cartNumList) => {
   try{
     const response = await axios.delete(`http://localhost:8080/carts/del-carts`, {params : {'cartNumList' : cartNumList}});
