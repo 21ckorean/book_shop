@@ -49,7 +49,7 @@ const Login = ({setLoginInfo}) => {
 
       //도서 목록 페이지나 도서 등록 페이지로 이동
       if(response.data.memRole == 'MANAGER'){
-        nav('/manage/book-form')
+        nav('/manage/manage-home')
       }
       else{
         nav('/');

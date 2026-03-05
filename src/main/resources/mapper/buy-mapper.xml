@@ -72,6 +72,14 @@
         ORDER BY B.BUY_DATE DESC;
     </select>
 
+    <!--오늘의 주문건수 및 매출-->
+    <select id="selectTodayOrder" resultMap="buy">
+        SELECT BUY_NUM
+            , BUY_PRICE
+        FROM SHOP_BUY
+        WHERE DATE(BUY_DATE) = CURDATE()
+    </select>
+
 
 </mapper>
 

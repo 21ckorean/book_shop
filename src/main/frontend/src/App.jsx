@@ -15,6 +15,7 @@ import UserLayout from './components/layout/UserLayout'
 import CheckboxTest from './study/CheckboxTest'
 import BuyList from './pages/buy/BuyList'
 import MyPage from './pages/member/MyPage'
+import Dashboard from './pages/admin/Dashboard'
 
 function App() {
 
@@ -80,6 +81,8 @@ function App() {
           {/* 상품 등록 페이지, URL : localhost:5173/manage/book-form */}
           <Route path='book-form' element={ <BookForm /> }/>
         
+          {/* 관리자홈, URL : localhost:5173/manage/manage-home */}
+          <Route path='manage-home' element={ <Dashboard />}/>
         </Route>
 
         

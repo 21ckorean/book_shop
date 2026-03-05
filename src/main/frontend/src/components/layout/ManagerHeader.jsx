@@ -29,14 +29,7 @@ const ManagerHeader = ({setLoginInfo}) => {
             </>
             :
             <>
-              <li>{loginInfo2_obj.memEmail}님 반갑습니다</li>
-              {
-                loginInfo2_obj.memEmail == null 
-                ?
-                <li>장바구니</li>
-                :
-                <li>마이페이지</li>
-              }      
+              <li>{loginInfo2_obj.memEmail}님 반갑습니다</li>  
               <li 
                 style={{cursor : 'pointer'}}
                 onClick={e => {

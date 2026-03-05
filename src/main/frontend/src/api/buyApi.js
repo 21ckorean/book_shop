@@ -1,5 +1,6 @@
 import axios from "axios"
 
+//구매정보 등록
 export const insertBuy = async (data) => {
   try{
     const responce = await axios.post('http://localhost:8080/buys', data);

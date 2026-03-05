@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -45,4 +46,16 @@ public class BuyController {
     }
   }
 
+  //오늘 구매 목록 조회 api
+  //(GET) localhost:8080/buys
+  @GetMapping("")
+  public ResponseEntity<?> getTodayOrderList(@RequestParam("buyDate") LocalDateTime buyDate){
+    try{
+      List<BuyDTO> todayList = buyService.selectTodayOrder(buyDate);
+      return ResponseEntity.status(HttpStatus.OK).body(todayList);
+    }catch(Exception e){
+      log.error("구매목록 조회 중 api 에러", e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+  }
 }

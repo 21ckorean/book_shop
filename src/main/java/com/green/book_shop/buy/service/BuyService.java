@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,5 +29,10 @@ public class BuyService {
   //구매 목록 조회
   public List<BuyDTO> selectBuyList(String memEmail){
     return buyMapper.selectBuyList(memEmail);
+  }
+
+  //오늘 구매목록 조회
+  public List<BuyDTO> selectTodayOrder(LocalDateTime buyDate){
+    return buyMapper.selectTodayOrder(buyDate);
   }
 }
