@@ -2,6 +2,8 @@ package com.green.book_shop.buy.service;
 
 import com.green.book_shop.buy.dto.BuyDTO;
 import com.green.book_shop.buy.dto.BuyDetailDTO;
+import com.green.book_shop.buy.dto.TopBookDTO;
+import com.green.book_shop.buy.dto.TopBuyerDTO;
 import com.green.book_shop.buy.mapper.BuyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +34,25 @@ public class BuyService {
     return buyMapper.selectBuyList(memEmail);
   }
 
-  //오늘 구매목록 조회
-  public List<BuyDTO> selectTodayOrder(LocalDateTime buyDate){
-    return buyMapper.selectTodayOrder(buyDate);
+  //오늘과 이달의 주문건수 및 매출액 조회
+  public Map<String, Integer> selectSaleInfo(){
+    return buyMapper.selectSaleInfo();
+  }
+
+  //상위 5명 구매자
+  public List<TopBuyerDTO> selectTopBuyer(){
+    return buyMapper.selectTopBuyer();
+  }
+
+
+  //판매가 많은 도서 5개
+  public List<TopBookDTO> selectTopBook(){
+    return buyMapper.selectTopBook();
+  }
+
+  //10일간의 매출금액
+  //매개변수로 9~0이 들어있는 List를 전달해야 함
+  public List<Map<String, Object>> selectSale10(List<Integer> dayList){
+    return buyMapper.selectSale10(dayList);
   }
 }
