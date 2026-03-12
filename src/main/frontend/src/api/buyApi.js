@@ -19,3 +19,43 @@ export const getBuyList = async (memEmail) => {
     console.log('구매목록 조회 axios 에러', e)
   }
 }
+
+//오늘, 이 달의 주문건수 및 매출액 정보
+export const dashborad_1 = async () => {
+  try{
+    const response = await axios.get('http://localhost:8080/buys/sale-info');
+    return response
+  }catch(e){
+    console.log('오늘, 이 달의 주문건수 및 매출액 정보 axios 오류', e)
+  }
+}
+
+//top 5 구매자 정보
+export const dashborad_2 = async () => {
+  try{
+    const response = await axios.get('http://localhost:8080/buys/top-buyer');
+    return response
+  }catch(e){
+    console.log('top 5 구매자 정보 axios 오류', e)
+  }
+}
+
+//top 5 도서정보
+export const dashborad_3 = async () => {
+  try{
+    const response = await axios.get('http://localhost:8080/buys/top-book');
+    return response
+  }catch(e){
+    console.log('top 5 도서정보 axios 오류', e)
+  }
+}
+
+//최근 10일간의 매출정보
+export const dashborad_4 = async () => {
+  try{
+    const response = await axios.get('http://localhost:8080/buys/sale-10');
+    return response
+  }catch(e){
+    console.log('최근 10일간의 매출정보 axios 오류', e)
+  }
+}
